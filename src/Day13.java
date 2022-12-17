@@ -18,14 +18,14 @@ public class Day13 {
     static List<ListOrNum> parseLists(Parser parser) {
         List<ListOrNum> lists = new ArrayList<>();
         while (parser.hasNext()) {
-            parser.skipNewLines();
+            while (parser.match('\n')) {}
             lists.add(parseList(parser));
         }
         return lists;
     }
 
     static ListOrNum parseList(Parser parser) {
-        parser.match('[');
+        parser.expect('[');
         List<ListOrNum> values = new ArrayList<>();
         while (parser.hasNext()) {
             char c = parser.peek();
@@ -39,7 +39,7 @@ public class Day13 {
                 values.add(new Num(parser.nextInt()));
             }
         }
-        parser.match(']');
+        parser.expect(']');
         return new _List(values);
     }
 
