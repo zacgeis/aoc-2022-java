@@ -8,7 +8,11 @@ import java.util.HashMap;
 import java.util.List;
 
 public class Day14 {
-    record Loc(int x, int y) {}
+    record Loc(int x, int y) {
+        Loc move(int dx, int dy) {
+            return new Loc(x + dx, y + dy);
+        }
+    }
     enum State {
         SAND,
         WALL,
@@ -32,7 +36,29 @@ public class Day14 {
         }
 
         boolean dropSand(Loc source) {
-            // TODO: handle the sand dropping logic.
+            Loc current = source;
+
+            boolean settled = false;
+            while (!settled) {
+                settled = true;
+                Loc[] options = {
+                        current.move(0, 1),
+                        current.move(-1, 1),
+                        current.move(1, 1)
+                };
+                for (Loc next : options) {
+                    State next_state = get(next);
+                    if (next_state == State.AIR) {
+                        settled = false;
+                        current = next;
+                        break;
+                    } else if (next_state == State.ABYSS) {
+                        return true;
+                    }
+                }
+            }
+            set(current, State.SAND);
+
             return false;
         }
 
