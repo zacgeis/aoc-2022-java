@@ -1,5 +1,7 @@
 package utils;
 
+// TODO: ga code action, gc comment, gf & gF format, gh hover, ctrl-p finder. something to open find in file too.
+
 public class Parser {
     public static Parser of(String value) {
         return new Parser(value);

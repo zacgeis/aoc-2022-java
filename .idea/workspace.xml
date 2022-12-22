@@ -7,6 +7,7 @@
     <list default="true" id="ad24a328-e5d4-486a-868a-98961afd3a9b" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Day14.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Day14.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/Parser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/Parser.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

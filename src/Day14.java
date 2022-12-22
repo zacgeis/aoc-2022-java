@@ -22,15 +22,26 @@ public class Day14 {
 
     static class Cave {
         HashMap<Loc, State> grid = new HashMap<>();
-        int lowest = Integer.MAX_VALUE;
+        int lowest = 0;
+        boolean part2;
+
+        Cave(boolean part2) {
+            this.part2 = part2;
+        }
 
         void set(Loc l, State s) {
             grid.put(l, s);
         }
 
         State get(Loc l) {
-            if (l.y < lowest) {
-                return State.ABYSS;
+            if (part2) {
+                if (l.y >= lowest + 2) {
+                    return State.WALL;
+                }
+            } else {
+                if (l.y > lowest) {
+                    return State.ABYSS;
+                }
             }
             return grid.getOrDefault(l, State.AIR);
         }
@@ -53,13 +64,17 @@ public class Day14 {
                         current = next;
                         break;
                     } else if (next_state == State.ABYSS) {
-                        return true;
+                        return false;
                     }
                 }
             }
-            set(current, State.SAND);
 
-            return false;
+            if (current.equals(source)) {
+                return false;
+            }
+
+            set(current, State.SAND);
+            return true;
         }
 
         void addWall(Loc a, Loc b) {
@@ -69,13 +84,14 @@ public class Day14 {
                 for (int y = min; y <= max; ++y) {
                     set(new Loc(a.x, y), State.WALL);
                 }
+                if (max > lowest) lowest = max;
             } else if (a.y == b.y) {
                 int min = Math.min(a.x, b.x);
                 int max = Math.max(a.x, b.x);
-                if (min < lowest) lowest = min;
                 for (int x = min; x <= max; ++x) {
                     set(new Loc(x, a.y), State.WALL);
                 }
+                if (a.y > lowest) lowest = a.y;
             } else {
                 throw new RuntimeException("Invalid wall.");
             }
@@ -109,7 +125,7 @@ public class Day14 {
 
     static void part1(String input) {
         List<List<Loc>> traces = parseTraces(Parser.of(input));
-        Cave cave = new Cave();
+        Cave cave = new Cave(false);
         for (List<Loc> trace : traces) {
             cave.addWalls(trace);
         }
@@ -121,10 +137,23 @@ public class Day14 {
         System.out.printf("part1: %d\n", count);
     }
 
+    static void part2(String input) {
+        List<List<Loc>> traces = parseTraces(Parser.of(input));
+        Cave cave = new Cave(true);
+        for (List<Loc> trace : traces) {
+            cave.addWalls(trace);
+        }
+        Loc source = new Loc(500, 0);
+        int count = 0;
+        do {
+            ++count;
+        } while (cave.dropSand(source));
+        System.out.printf("part2: %d\n", count);
+    }
+
     public static void main(String[] args) throws IOException {
         String input = Files.readString(Paths.get("inputs/14.txt"));
         part1(input);
+        part2(input);
     }
 }
-
-// TODO: ga code action, gc comment, gf & gF format, gh hover, ctrl-p finder. something to open find in file too.
