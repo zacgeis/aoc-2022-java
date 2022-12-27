@@ -2,6 +2,7 @@ package utils;
 
 // TODO: ga code action, gc comment, gf & gF format, gh hover, ctrl-p finder. something to open find in file too.
 
+// TODO: add a line parsing utility.
 public class Parser {
     public static Parser of(String value) {
         return new Parser(value);
@@ -43,7 +44,7 @@ public class Parser {
         int start = i;
         while (hasNext()) {
             char c = peek();
-            if (c == '\n' || c == ' ') {
+            if (c == '\n' || c == ' ' || c == '\t') {
                 break;
             } else {
                 next();
