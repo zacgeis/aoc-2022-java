@@ -12,6 +12,10 @@ public class Parser {
         return c >= '0' && c <= '9';
     }
 
+    public static boolean isAlpha(char c) {
+        return (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z');
+    }
+
     public static boolean isNumeric(char c) {
         return isDigit(c) || c == '-';
     }
@@ -44,10 +48,10 @@ public class Parser {
         int start = i;
         while (hasNext()) {
             char c = peek();
-            if (c == '\n' || c == ' ' || c == '\t') {
-                break;
-            } else {
+            if (isDigit(c) || isAlpha(c) || c == '-' || c == '_') {
                 next();
+            } else {
+                break;
             }
         }
         return value.substring(start, i);
